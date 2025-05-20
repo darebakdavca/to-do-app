@@ -1,2 +1,18 @@
 @import "tailwindcss";
 @source "../views";
+
+.header-link {
+    @apply border-b-2 hover:border-blue-500;
+}
+
+.input {
+    @apply mt-1 w-full rounded-lg border border-slate-600 bg-slate-800 p-3 text-base text-gray-100 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+.label {
+    @apply block mb-1 text-base font-medium text-gray-300;
+}
+
+.button {
+    @apply hover:bg-blue-500 rounded-lg bg-blue-600 p-3 cursor-pointer text-base;
+}

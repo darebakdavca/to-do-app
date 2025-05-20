@@ -17,7 +17,19 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::view('/', 'welcome');
+Route::view('/', 'home', [
+    'tasks' => ['clean', 'brush', 'replace'],
+    'taskLists' => ['personal', 'work', 'family'],
+    'activeTaskList' => 'work'
+]);
+
+Route::get('/tasks/{taskList}', function (string $taskList) {
+    return view('home', [
+        'tasks' => ['clean', 'brush', 'replace'],
+        'taskLists' => ['personal', 'work', 'family'],
+        'activeTaskList' => $taskList
+    ]);
+});
 
 // Route::get('/user/{id}', function (string $id) {
 //     return 'User ' . $id;
@@ -33,4 +45,14 @@ Route::view('/', 'welcome');
 
 Route::fallback(function () {
     return view('404');
+});
+
+
+
+Route::get('/login', function () {
+    return view('login');
+});
+
+Route::get('/register', function () {
+    return view('register');
 });
