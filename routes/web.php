@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +33,15 @@ Route::get('/tasks/{taskList}', function (string $taskList) {
         'taskLists' => ['personal', 'work', 'family'],
         'activeTaskList' => $taskList
     ]);
-});
+})->name('tasks.show');
+
+use Illuminate\Support\Facades\DB;
+
+Route::get('/tasks/{taskList}/{task}/edit}', function (string $taskList, string $task) {
+    $users = DB::select('select * from users;');
+    return view('edit', ['task' => $task, 'taskList' => $taskList, 'users' => $users]);
+})->name('task.edit');
+
 
 // Route::get('/user/{id}', function (string $id) {
 //     return 'User ' . $id;
@@ -53,6 +65,12 @@ Route::get('/login', function () {
     return view('login');
 });
 
+Route::post('/login', [LoginController::class, 'authenticate']);
+
+Route::get('/logout', [LogoutController::class, 'logout']);
+
 Route::get('/register', function () {
     return view('register');
 });
+
+Route::post('/register', [RegisterController::class, 'register']);

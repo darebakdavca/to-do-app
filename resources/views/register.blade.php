@@ -3,25 +3,46 @@
     <x-authContainer>
         <x-slot:title>Register</x-slot:title>
         <x-slot:description>Register your account to save your first task</x-slot:description>
-        <form method="POST" action="/register" class="grid grid-cols-1 gap-4">
+        <form class="grid grid-cols-1 gap-4" method="POST" action="/register">
             @csrf
             <div>
-                <label for="email" class="label">
+                <label class="label" for="name">
+                    Name
+                </label>
+                <input class="input @error('name') border-red-500 @else border-slate-600 @enderror"
+                    id="name" name="name" type="text" required>
+                @error('name')
+                    <div class="error-msg">{{ $message }}</div>
+                @enderror
+            </div>
+            <div>
+                <label class="label" for="email">
                     Email
                 </label>
-                <input type="email" required id="email" name="email" class="input">
+                <input class="input @error('email') border-red-500 @else border-slate-600 @enderror"
+                    id="email" name="email" type="email" required>
+                @error('email')
+                    <div class="error-msg">{{ $message }}</div>
+                @enderror
             </div>
             <div>
-                <label for="pswd1" class="label">
+                <label class="label" for="password1">
                     Password
                 </label>
-                <input type="password" required id="pswd1" name="pswd1" class="input">
+                <input
+                    class="input @error('password1') border-red-500 @else border-slate-600 @enderror"
+                    id="password1" name="password1" type="password" required>
             </div>
             <div>
-                <label for="pswd1" class="label">
+                <label class="label" for="password2">
                     Password again
                 </label>
-                <input type="password" required id="pswd2" name="pswd2" class="input">
+                <input
+                    class="input @error('password2') border-red-500 @else border-slate-600 @enderror"
+                    id="password2" name="password2" type="password" required>
+                @error('password')
+                    <div class="error-msg">{{ $message }}</div>
+                @enderror
             </div>
             <button class="button" type="submit">Register</button>
         </form>
