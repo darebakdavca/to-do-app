@@ -12,7 +12,7 @@
                 </ul>
             </div>
         @endif
-        <form class="grid grid-cols-1 gap-4" method="POST" action="/login">
+        <form class="form" method="POST" action="/login">
             @csrf
             <div>
                 <label class="label" for="email">
