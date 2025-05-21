@@ -3,6 +3,9 @@
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\RegisterController;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
@@ -21,13 +24,16 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::view('/', 'home', [
-    'tasks' => ['clean', 'brush', 'replace'],
-    'taskLists' => ['personal', 'work', 'family'],
-    'activeTaskList' => 'work'
-]);
+Route::get('/', function () {
+    if (Auth::check()) {
+        // TODO check last active taskList from database
+        return redirect('/tasks/personal');
+    } else {
+        return view('home');
+    }
+});
 
-Route::get('/tasks/{taskList}', function (string $taskList) {
+Route::get('/tasks/{taskList?}', function (?string $taskList = 'personal') {
     return view('home', [
         'tasks' => ['clean', 'brush', 'replace'],
         'taskLists' => ['personal', 'work', 'family'],

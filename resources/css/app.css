@@ -18,5 +18,5 @@
 }
 
 .error-msg {
-    @apply text-red-500 text-sm mb-1;
+    @apply text-red-500 text-sm mt-1;
 }
