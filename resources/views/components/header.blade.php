@@ -1,7 +1,7 @@
 <div class="flex items-center justify-between p-5">
     <h1 class="text-3xl font-semibold"><a href="/">To Do App</a></h1>
     <div class="flex items-center gap-4 text-xl">
-        @if (Auth::check())
+        @auth
             <span class="">
                 {{ Auth::user()->name }}
             </span>
@@ -12,6 +12,6 @@
                 href="/login">Login</a>
             <a class="header-link {{ request()->is('register') ? 'border-blue-500' : 'border-transparent' }}"
                 href="/register">Register</a>
-        @endif
+        @endauth
     </div>
 </div>
