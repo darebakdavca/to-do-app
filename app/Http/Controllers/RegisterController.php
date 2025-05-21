@@ -16,7 +16,10 @@ class RegisterController extends Controller {
             'password1' => ['required', 'min:8'],
             'password2' => ['required', 'same:password1']
         ], [
-            'password2.same' => 'Passwords do not match'
+            'password1.required' => 'Please enter a password.',
+            'password1.min' => 'Password must be at least 8 characters.',
+            'password2.required' => 'Please confirm your password.',
+            'password2.same' => 'Passwords do not match.',
         ]);
 
         $user = User::create([
@@ -27,6 +30,6 @@ class RegisterController extends Controller {
 
         Auth::login($user);
 
-        return redirect()->intended('/');
+        return redirect()->intended('/tasks');
     }
 }
