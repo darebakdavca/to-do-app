@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+        <link type="image/x-icon" href="{{ asset('favicon.ico') }}" rel="icon">
         <title>{{ $title ?? '' }} | To Do App</title>
         <!-- Styles -->
         @vite('resources/css/app.css')

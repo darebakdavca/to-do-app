@@ -1,8 +1,8 @@
 <x-layout>
     <x-slot:title>Login</x-slot:title>
-    <x-authContainer>
+    <x-container>
         <x-slot:title>Login</x-slot:title>
-        <x-slot:description>Login to edit your tasks</x-slot:description>
+        <x-slot:description>Login to edit your tasks.</x-slot:description>
         @if ($errors->any())
             <div class="mb-4 text-red-500">
                 <ul>
@@ -30,5 +30,5 @@
             </div>
             <button class="button" type="submit">Login</button>
         </form>
-    </x-authContainer>
+    </x-container>
 </x-layout>

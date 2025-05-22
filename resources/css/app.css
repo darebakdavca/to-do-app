@@ -6,7 +6,7 @@
 }
 
 .input {
-    @apply mt-1 w-full rounded-lg border bg-slate-800 px-3 py-1.5 text-base text-gray-100 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500;
+    @apply mt-1 w-full rounded-lg font-semibold border bg-slate-800 px-6 py-3 text-base text-gray-100 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500;
 }
 
 .label {
@@ -14,11 +14,11 @@
 }
 
 .button {
-    @apply hover:bg-blue-500 rounded-lg bg-blue-600 px-3 py-1.5 cursor-pointer text-base;
+    @apply hover:bg-blue-500 rounded bg-blue-600 transition font-semibold shadow px-6 py-3 cursor-pointer text-base;
 }
 
 .cancel-button {
-    @apply hover:underline cursor-pointer px-3 py-1.5;
+    @apply hover:underline cursor-pointer px-6 py-3 block;
 }
 
 .error-msg {
@@ -26,7 +26,7 @@
 }
 
 .form {
-    @apply grid grid-cols-1 gap-3;
+    @apply grid grid-cols-1 gap-4;
 }
 
 @layer base {

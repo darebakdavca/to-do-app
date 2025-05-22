@@ -1,8 +1,8 @@
 <x-layout>
     <x-slot:title>Register</x-slot:title>
-    <x-authContainer>
+    <x-container>
         <x-slot:title>Register</x-slot:title>
-        <x-slot:description>Register your account to save your first task</x-slot:description>
+        <x-slot:description>Register your account to create your first task.</x-slot:description>
         <form class="grid grid-cols-1 gap-4" method="POST" action="/register">
             @csrf
             <div>
@@ -49,5 +49,5 @@
             </div>
             <button class="button" type="submit">Register</button>
         </form>
-    </x-authContainer>
+    </x-container>
 </x-layout>

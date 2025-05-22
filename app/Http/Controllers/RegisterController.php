@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TaskList;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,8 +29,15 @@ class RegisterController extends Controller {
             'password' => Hash::make($credentials['password1'])
         ]);
 
+        $taskList = TaskList::create([
+            'name' => 'My tasks',
+            'description' => 'Default personal task list',
+            'type' => 'private',
+            'user_id' => $user->id,
+        ]);
+
         Auth::login($user);
 
-        return redirect()->intended('/tasks');
+        return redirect()->intended('/task-list/' . $taskList->id);
     }
 }
