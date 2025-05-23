@@ -29,11 +29,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     if (Auth::check()) {
         // TODO: check last active taskList from database
-        return redirect('/task-lists');
+        $taskList = session('taskList');
+        return redirect(route('task-lists.show', ['task_list' => $taskList]));
     } else {
         return view('home');
     }
-});
+})->name('home');
 
 Route::post('/tasks/{task}/complete', [TaskController::class, 'complete'])->name('tasks.complete');
 Route::resource('tasks', TaskController::class);

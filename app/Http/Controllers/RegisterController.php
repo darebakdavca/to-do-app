@@ -36,6 +36,8 @@ class RegisterController extends Controller {
             'user_id' => $user->id,
         ]);
 
+        session(['taskList' => $taskList]);
+
         Auth::login($user);
 
         return redirect()->intended('/task-list/' . $taskList->id);

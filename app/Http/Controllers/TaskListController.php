@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\TaskList;
 use Illuminate\Http\Request;
-use App\Enums\TaskListType;
 use Illuminate\Support\Facades\Auth;
 
 class TaskListController extends Controller {
@@ -12,14 +11,13 @@ class TaskListController extends Controller {
      * Display a listing of the resource.
      */
     public function index() {
-        $taskLists = TaskList::all();
-        $taskList = $taskLists->first();
-        $tasks = $taskList ? $taskList->tasks : collect();
-        return view('home', [
-            'taskList' => $taskList,
-            'taskLists' => $taskLists,
-            'tasks' => $tasks
-        ]);
+        if (Auth::check()) {
+
+            $taskList = session('taskList');
+            return redirect(route('task-lists.show', ['task_list' => $taskList]));
+        } else {
+            return redirect(route('home'));
+        }
     }
 
 
@@ -59,6 +57,7 @@ class TaskListController extends Controller {
     public function show(TaskList $taskList) {
         $taskLists = TaskList::all();
         $tasks = $taskList->tasks;
+        session(['taskList' => $taskList->id]);
         return view('home', [
             'taskList' => $taskList,
             'taskLists' => $taskLists,
