@@ -36,21 +36,7 @@ Route::get('/', function () {
 Route::resource('tasks', TaskController::class);
 Route::resource('task-lists', TaskListController::class);
 
-Route::get('/tasks/{taskList?}', function (?string $taskList = 'personal') {
-    return view('home', [
-        'tasks' => ['clean', 'brush', 'replace'],
-        'taskLists' => ['personal', 'work', 'family'],
-        'activeTaskList' => $taskList
-    ]);
-})->name('tasks.show');
-
 use Illuminate\Support\Facades\DB;
-
-Route::get('/tasks/{taskList}/{task}/edit}', function (string $taskList, string $task) {
-    $users = DB::select('select * from users;');
-    return view('edit', ['task' => $task, 'taskList' => $taskList, 'users' => $users]);
-})->name('task.edit');
-
 
 
 // Route::get('/user/{id}', function (string $id) {

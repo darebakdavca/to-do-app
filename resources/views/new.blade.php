@@ -32,7 +32,6 @@
                         class="input @error('due_date') border-red-500 @else border-slate-600 @enderror"
                         id="due_date" name="due_date" type="date" value="{{ old('due_date') }}">
                 </div>
-                {{-- TODO: add input field for selecting the task list --}}
                 <div>
                     <label for="taks_list_id">Task List</label>
                     <select

@@ -55,14 +55,28 @@ class TaskController extends Controller {
      * Show the form for editing the specified resource.
      */
     public function edit(Task $task) {
-        //
+        $taskLists = TaskList::all();
+        return view('edit', ['task' => $task, 'taskLists' => $taskLists]);
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Task $task) {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string', 'max:1000'],
+            'due_date' => ['nullable', 'date'],
+            'task_list_id' => ['required', 'exists:task_lists,id']
+        ]);
+        $task->update([
+            'name' => $validated['name'],
+            'description' => $validated['description'] ?? null,
+            'due_date' => $validated['due_date'] ?? null,
+            'task_list_id' => $validated['task_list_id']
+        ]);
+
+        return redirect()->route('task-lists.index');
     }
 
     /**
