@@ -6,8 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link type="image/x-icon" href="{{ asset('favicon.ico') }}" rel="icon">
         <title>{{ $title ?? '' }} | To Do App</title>
-        <!-- Styles -->
         @vite('resources/css/app.css')
+        @vite('resources/js/jquery.js')
     </head>
 
     <body class="h-dvh bg-slate-900 text-gray-100 antialiased">
