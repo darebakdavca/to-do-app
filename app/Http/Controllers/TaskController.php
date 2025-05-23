@@ -83,11 +83,20 @@ class TaskController extends Controller {
         return redirect()->route('task-lists.show', ['task_list' => $taskList]);
     }
 
+    public function complete(Task $task) {
+        $task->complete = !$task->complete; // Toggle complete status
+        $task->save();
+
+        return back();
+    }
+
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Task $task) {
+        $taskList = $task->taskList;
         $task->delete();
-        return redirect()->route('task-lists.index');
+        return redirect()->route('task-lists.show', ['task_list' => $taskList]);
     }
 }
