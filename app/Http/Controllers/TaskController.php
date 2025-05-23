@@ -18,10 +18,11 @@ class TaskController extends Controller {
     /**
      * Show the form for creating a new resource.
      */
-    public function create() {
+    public function create(Request $request) {
+        $taskList = $request->query('task-list');
         $user = Auth::user();
         $taskLists = TaskList::all()->where('user_id', $user->id);
-        return view('new', ['taskLists' => $taskLists]);
+        return view('new', ['taskLists' => $taskLists, 'myTaskList' => $taskList]);
     }
 
     /**
@@ -34,14 +35,15 @@ class TaskController extends Controller {
             'due_date' => ['nullable', 'date'],
             'task_list_id' => ['required', 'exists:task_lists,id']
         ]);
-        Task::create([
+        $task = Task::create([
             'name' => $validated['name'],
             'description' => $validated['description'] ?? null,
             'due_date' => $validated['due_date'] ?? null,
             'task_list_id' => $validated['task_list_id'],
         ]);
+        $taskList = $task->taskList;
 
-        return redirect()->route('task-lists.index');
+        return redirect()->route('task-lists.show', ['task_list' => $taskList]);
     }
 
     /**
@@ -76,7 +78,9 @@ class TaskController extends Controller {
             'task_list_id' => $validated['task_list_id']
         ]);
 
-        return redirect()->route('task-lists.index');
+        $taskList = $task->taskList;
+
+        return redirect()->route('task-lists.show', ['task_list' => $taskList]);
     }
 
     /**

@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot:title>
-        Tasks
+        {{ $taskList->name }}
     </x-slot:title>
     @auth
         <div class="grid w-full grid-cols-[auto_1fr] gap-4 p-5 sm:mx-auto">

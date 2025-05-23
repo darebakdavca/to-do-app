@@ -42,12 +42,21 @@
                     <select
                         class="input @error('task_list_id') border-red-500 @else border-slate-600 @enderror"
                         id="task_list_id" name="task_list_id">
-                        @foreach ($taskLists as $taskList)
-                            <option value="{{ old('task_list_id', $task->task_list_id) }}"
-                                selected="{{ $taskList->id === $task->task_list_id }}">
-                                {{ $taskList->name }}
-                            </option>
-                        @endforeach
+                        <optgroup label="Private">
+                            @foreach ($taskLists->where('type', 'private') as $taskList)
+                                <option value="{{ old('task_list_id', $taskList->id) }}"
+                                    @if ($taskList->id == $task->task_list_id) selected @endif>
+                                    {{ $taskList->name }}
+                                </option>
+                            @endforeach
+                        </optgroup>
+                        <optgroup label="Shared">
+                            @foreach ($taskLists->where('type', 'shared') as $taskList)
+                                <option value="{{ old('task_list_id', $taskList->id) }}"
+                                    @if ($taskList->id == $task->task_list_id) selected @endif>
+                                    {{ $taskList->name }} </option>
+                            @endforeach
+                        </optgroup>
                     </select>
                     @error('task_list_id')
                         <div class="error-msg">
@@ -58,7 +67,7 @@
                 <div class="flex gap-2 text-white">
                     <button class="button" type="submit">Save</button>
                     <a class="cancel-button" id="close-btn" type="button"
-                        href="{{ route('task-lists.index') }}">Cancel</a>
+                        href="{{ route('task-lists.show', ['task_list' => $task->task_list_id]) }}">Cancel</a>
                 </div>
             </form>
         </div>

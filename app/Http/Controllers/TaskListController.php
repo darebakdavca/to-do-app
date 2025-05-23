@@ -25,12 +25,12 @@ class TaskListController extends Controller {
 
     /**
      * Show the form for creating a new resource.
-     * @param 'private'|'shared' $type
      */
     public function create(Request $request) {
         $type = $request->query('type');
+        $taskList = $request->query('task-list');
         if ($type == 'shared' | $type == 'private') {
-            return view('newTaskList', ['type' => $type]);
+            return view('newTaskList', ['type' => $type, 'taskList' => $taskList]);
         }
     }
 
@@ -44,13 +44,13 @@ class TaskListController extends Controller {
             'type' => ['required', 'in:private,shared']
         ]);
 
-        TaskList::create([
+        $taskList = TaskList::create([
             'name' => $validated['name'],
             'description' => $validated['description'],
             'type' => $validated['type'],
             'user_id' => Auth::user()->id
         ]);
-        return redirect()->route('task-lists.index');
+        return redirect()->route('task-lists.show', ['task_list' => $taskList]);
     }
 
     /**
@@ -70,14 +70,24 @@ class TaskListController extends Controller {
      * Show the form for editing the specified resource.
      */
     public function edit(TaskList $taskList) {
-        //
+        return view('editTaskList', ['taskList' => $taskList]);
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, TaskList $taskList) {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string', 'max:1000'],
+            'type' => ['required', 'in:private,shared']
+        ]);
+
+        $taskList->update([
+            'name' => $validated['name'],
+            'description' => $validated['description'],
+        ]);
+        return redirect()->route('task-lists.show', ['task_list' => $taskList]);
     }
 
     /**
