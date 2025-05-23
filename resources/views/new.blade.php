@@ -21,7 +21,7 @@
                     <label class="label" for="description">
                         Description
                     </label>
-                    <textarea class="input @error('description') border-red-500 @else border-slate-600 @enderror"
+                    <textarea class="input @error('description') border-red-500 @else border-slate-600 @enderror !h-52"
                         id="description" name="description">{{ old('description') }}</textarea>
                 </div>
                 <div>
@@ -50,7 +50,7 @@
                 <div class="flex gap-2 text-white">
                     <button class="button" type="submit">Create</button>
                     <a class="cancel-button" id="close-btn" type="button"
-                        href="/task-lists/1">Cancel</a>
+                        href="{{ route('task-lists.index') }}">Cancel</a>
                 </div>
             </form>
         </div>

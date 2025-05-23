@@ -21,6 +21,10 @@
     @apply hover:underline cursor-pointer px-6 py-3 block;
 }
 
+.task-button {
+    @apply hover:bg-slate-700 px-1 py-1 rounded cursor-pointer flex gap-2 items-center justify-center;
+}
+
 .error-msg {
     @apply text-red-500 text-sm mt-1;
 }

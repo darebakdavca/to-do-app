@@ -25,7 +25,7 @@
                     <label class="label" for="description">
                         Description
                     </label>
-                    <textarea class="input @error('description') border-red-500 @else border-slate-600 @enderror"
+                    <textarea class="input @error('description') border-red-500 @else border-slate-600 @enderror !h-52"
                         id="description" name="description">{{ old('description', $task->description) }}</textarea>
                 </div>
                 <div>

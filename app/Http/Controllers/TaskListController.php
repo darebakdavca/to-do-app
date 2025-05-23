@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\TaskList;
 use Illuminate\Http\Request;
+use App\Enums\TaskListType;
+use Illuminate\Support\Facades\Auth;
 
 class TaskListController extends Controller {
     /**
@@ -20,18 +22,35 @@ class TaskListController extends Controller {
         ]);
     }
 
+
     /**
      * Show the form for creating a new resource.
+     * @param 'private'|'shared' $type
      */
-    public function create() {
-        //
+    public function create(Request $request) {
+        $type = $request->query('type');
+        if ($type == 'shared' | $type == 'private') {
+            return view('newTaskList', ['type' => $type]);
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request) {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string', 'max:1000'],
+            'type' => ['required', 'in:private,shared']
+        ]);
+
+        TaskList::create([
+            'name' => $validated['name'],
+            'description' => $validated['description'],
+            'type' => $validated['type'],
+            'user_id' => Auth::user()->id
+        ]);
+        return redirect()->route('task-lists.index');
     }
 
     /**

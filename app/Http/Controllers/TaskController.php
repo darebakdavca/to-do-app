@@ -34,11 +34,11 @@ class TaskController extends Controller {
             'due_date' => ['nullable', 'date'],
             'task_list_id' => ['required', 'exists:task_lists,id']
         ]);
-        $task = Task::create([
+        Task::create([
             'name' => $validated['name'],
             'description' => $validated['description'] ?? null,
             'due_date' => $validated['due_date'] ?? null,
-            'task_list_id' => $validated['task_list_id']
+            'task_list_id' => $validated['task_list_id'],
         ]);
 
         return redirect()->route('task-lists.index');
@@ -83,6 +83,7 @@ class TaskController extends Controller {
      * Remove the specified resource from storage.
      */
     public function destroy(Task $task) {
-        //
+        $task->delete();
+        return redirect()->route('task-lists.index');
     }
 }
