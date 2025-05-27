@@ -37,24 +37,27 @@ class RegisterController extends Controller {
             'user_id' => $user->id,
         ]);
 
-        $sharedTaskList = TaskList::create([
-            'name' => 'Assigned to me',
-            'description' => 'Tasks that are assigned to you across all shared task lists.',
-            'type' => 'shared',
-            'user_id' => $user->id,
-        ]);
-
         $user->taskLists()->attach($taskList->id);
-        $user->taskLists()->attach($sharedTaskList->id);
+
 
         session(['taskList' => $taskList]);
 
         Auth::login($user);
 
-        return redirect()->route('task-lists.show', ['task_list' => $taskList])->with('status', 'Welcome, ' . $user->name . '!');
+        $callback = session('callback');
+
+        if ($callback) {
+            return redirect($callback);
+        } else {
+            return redirect()->route('task-lists.show', ['task_list' => $taskList])->with('status', 'Welcome, ' . $user->name . '!');
+        }
     }
 
-    public function show() {
-        return view('register');
+    public function show(Request $request) {
+        $callback = $request->input('callback');
+        if ($callback) {
+            session(['callback' => $callback]);
+        }
+        return view('register', ['callback' => $callback]);
     }
 }

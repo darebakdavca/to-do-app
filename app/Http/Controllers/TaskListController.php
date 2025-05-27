@@ -12,13 +12,8 @@ class TaskListController extends Controller {
      * Display a listing of the resource.
      */
     public function index() {
-        if (Auth::check()) {
-
-            $taskList = session('taskList');
-            return redirect(route('task-lists.show', ['task_list' => $taskList]));
-        } else {
-            return redirect(route('home'));
-        }
+        $taskList = session('taskList');
+        return redirect(route('task-lists.show', ['task_list' => $taskList]));
     }
 
 
@@ -60,9 +55,7 @@ class TaskListController extends Controller {
      */
     public function show(TaskList $taskList) {
         $user = Auth::user();
-        $taskLists = $user->ownedTaskLists;
-        // Log the task lists
-        Log::info('TaskLists:', ['taskLists' => $taskLists->toArray()]);
+        $taskLists = $user->taskLists;
         $tasks = $taskList->tasks;
         session(['taskList' => $taskList->id]);
         return view('home', [

@@ -48,6 +48,9 @@
                 @enderror
             </div>
             <button class="button" type="submit">Register</button>
+            @isset($callback)
+                <input name="callback" type="hidden" value="{{ $callback }}">
+            @endisset
         </form>
     </x-container>
 </x-layout>

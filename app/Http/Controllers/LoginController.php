@@ -9,15 +9,21 @@ use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller {
     public function authenticate(Request $request): RedirectResponse {
-        $credentials = $request->validate(['email' => ['required', 'email'], 'password' => 'required']);
+        $credentials = $request->validate(
+            [
+                'email' => ['required', 'email'],
+                'password' => 'required',
+            ]
+        );
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             $taskList = $user->taskLists()->first();
             $request->session()->regenerate();
-            $callback = $request->query('callback');
+            $callback = $request->input('callback');
             Log::info('User logged in', ['user_id' => $user->id, 'email' => $user->email, 'task_list_id' => $taskList ? $taskList->id : null]);
             Log::info('Callback URL', ['callback' => $callback]);
             if ($callback) {
+                session('callback', $callback);
                 return redirect($callback);
             }
             return redirect()->route('task-lists.show', ['task_list' => $taskList])->with('status', 'Welcome, ' . $user->name . '!');
@@ -27,7 +33,13 @@ class LoginController extends Controller {
         ])->onlyInput('email');
     }
 
-    public function show() {
-        return view('login');
+    public function show(Request $request) {
+        $callback = $request->input('callback');
+        if ($callback) {
+            session(['callback' => $callback]);
+        }
+        return view('login', [
+            'callback' => $callback
+        ]);
     }
 }

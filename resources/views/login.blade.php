@@ -26,6 +26,9 @@
                 @enderror
             </div>
             <button class="button" type="submit">Login</button>
+            @isset($callback)
+                <input name="callback" type="hidden" value="{{ $callback }}">
+            @endisset
         </form>
         @if ($errors->any())
             <div class="mt-4">

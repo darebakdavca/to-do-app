@@ -21,6 +21,7 @@
             <x-footer></x-footer>
         </div>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+        @vite('resources/js/infoPopUp.js')
     </body>
 
 </html>

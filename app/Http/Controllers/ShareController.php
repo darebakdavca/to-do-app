@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class ShareController extends Controller {
-    public function index(TaskList $taskList) {
+
+    public function show(TaskList $taskList) {
         $token = Str::random(40);
         $link = route('share.accept', ['token' => $token]);
 
@@ -42,17 +43,17 @@ class ShareController extends Controller {
     }
 
 
-    public function accept(Request $request, string $token) {
-        // TODO: lookup invitation by token, validate token, add user to shared list
+    public function accept(string $token) {
         $invitation = Invitation::where('token', $token)->first();
         if (!$invitation) {
-            return redirect('/')->with('status', 'Invalid or expired invitation.');
+            $statusMesage = 'Invalid or expired invitation.';
         }
         if ($invitation->accepted_at) {
-            return redirect('/')->with('status', 'Invitation already accepted.');
+            $statusMesage = 'Invitation already accepted.';
         }
         $user = Auth::user();
         if (!$user) {
+            session('callback', route('share.accept', ['token' => $token]));
             return redirect()
                 ->route('login.index', ['callback' => route('share.accept', ['token' => $token])])
                 ->with('status', 'Please log in to accept the invitation.');
