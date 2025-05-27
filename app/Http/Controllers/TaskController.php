@@ -6,6 +6,7 @@ use App\Models\TaskList;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller {
     /**
@@ -69,7 +70,8 @@ class TaskController extends Controller {
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:1000'],
             'due_date' => ['nullable', 'date'],
-            'task_list_id' => ['required', 'exists:task_lists,id']
+            'task_list_id' => ['required', 'exists:task_lists,id'],
+
         ]);
         $task->update([
             'name' => $validated['name'],
@@ -78,13 +80,20 @@ class TaskController extends Controller {
             'task_list_id' => $validated['task_list_id']
         ]);
 
+        $assignees = $request->input('assignees', []);
+        Log::info('Updating task with assignees', [
+            'task_id' => $task->id,
+            'assignees' => $assignees
+        ]);
+        $task->users()->sync($assignees);
+
         $taskList = $task->taskList;
 
         return redirect()->route('task-lists.show', ['task_list' => $taskList]);
     }
 
     public function complete(Task $task) {
-        $task->complete = !$task->complete; // Toggle complete status
+        $task->complete = !$task->complete;
         $task->save();
 
         return back();

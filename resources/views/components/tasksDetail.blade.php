@@ -1,4 +1,4 @@
-<div class="mt-1 overflow-hidden rounded-md">
+<div class="mt-1 overflow-x-hidden overflow-y-clip rounded-md">
     <div class="task-detail-button flex cursor-pointer items-center justify-between gap-4 bg-slate-800 hover:bg-slate-900"
         data-task-id="{{ $task->id }}">
         <div class="flex items-center gap-4 p-3">
@@ -80,6 +80,23 @@
                 @else
                     <i class="text-gray-400">No due date</i>
                 @endif
+            </div>
+            <div class="flex items-center gap-4">
+                Assigned to:
+                <div class="flex gap-2">
+                    @forelse ($task->users as $assignee)
+                        <div class="relative">
+                            <button class="task-button info-btn" data-position="top"
+                                data-info="{{ $assignee->name }}">
+                                <img src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-user-web-flaticons-flat-flat-icons-2.png"
+                                    alt="external-user-web-flaticons-flat-flat-icons-2"
+                                    width="24" height="24" />
+                            </button>
+                        </div>
+                    @empty
+                        <i class="text-gray-400">No users assigned</i>
+                    @endforelse
+                </div>
             </div>
         </div>
     </div>
