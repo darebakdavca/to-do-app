@@ -1,7 +1,7 @@
 <x-layout>
     <x-slot:title>
         @isset($taskList)
-            {{ $taskList->name }}
+            {{ ucfirst($taskList->name) }}
         @else
             Tasks
         @endisset

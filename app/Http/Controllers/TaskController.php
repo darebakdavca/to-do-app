@@ -21,7 +21,7 @@ class TaskController extends Controller {
     public function create(Request $request) {
         $taskList = $request->query('task-list');
         $user = Auth::user();
-        $taskLists = TaskList::all()->where('user_id', $user->id);
+        $taskLists = $user->taskLists;
         return view('new', ['taskLists' => $taskLists, 'myTaskList' => $taskList]);
     }
 

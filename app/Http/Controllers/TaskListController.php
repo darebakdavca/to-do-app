@@ -55,6 +55,13 @@ class TaskListController extends Controller {
      */
     public function show(TaskList $taskList) {
         $user = Auth::user();
+
+        $hasAccess = $taskList->users()->where('user_id', $user->id)->exists();
+
+        if (!$hasAccess) {
+            abort(403, 'You do not have access to this task list.');
+        }
+
         $taskLists = $user->taskLists;
         $tasks = $taskList->tasks;
         session(['taskList' => $taskList->id]);

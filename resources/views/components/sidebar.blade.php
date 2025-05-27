@@ -7,23 +7,26 @@
                 <div class="relative">
                     <button class="task-button info-btn hover:bg-slate-800"
                         data-info="Private task lists are only visible to you.">
-                        <svg class="size-5" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+                        <svg class="size-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 0 1 .67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 1 1-.671-1.34l.041-.022ZM12 9a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"
+                                clip-rule="evenodd" />
                         </svg>
+
                     </button>
                 </div>
             </h3>
-
-            <a class="task-button"
-                href="{{ route('task-lists.create', ['type' => 'private', 'task-list' => $taskList]) }}">
-                <svg class="size-6" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M12 4.5v15m7.5-7.5h-15" />
-                </svg>
-            </a>
+            <div class="relative">
+                <a class="task-button info-btn" data-info="Create new private task list"
+                    href="{{ route('task-lists.create', ['type' => 'private', 'task-list' => $taskList]) }}">
+                    <svg class="size-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                </a>
+            </div>
         </div>
         @foreach ($taskLists->where('type', 'private') as $myTaskList)
             <div
@@ -44,24 +47,28 @@
                 </svg>
                 <div class="relative">
                     <button class="task-button info-btn hover:bg-slate-800"
-                        data-info="The task list can be shared with other users.">
-                        <svg class="size-5" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+                        data-info="Shared task lists can be shared with other users.">
+                        <svg class="size-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 0 1 .67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 1 1-.671-1.34l.041-.022ZM12 9a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"
+                                clip-rule="evenodd" />
                         </svg>
+
+
                     </button>
                 </div>
             </h3>
-            <a class="task-button"
-                href="{{ route('task-lists.create', ['type' => 'shared', 'task-list' => $taskList]) }}">
-                <svg class="size-6" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M12 4.5v15m7.5-7.5h-15" />
-                </svg>
-
-            </a>
+            <div class="relative">
+                <a class="task-button info-btn" data-info="Create new shared task list"
+                    href="{{ route('task-lists.create', ['type' => 'shared', 'task-list' => $taskList]) }}">
+                    <svg class="size-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                </a>
+            </div>
         </div>
         @foreach ($taskLists->where('type', 'shared') as $myTaskList)
             <div

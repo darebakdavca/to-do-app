@@ -41,7 +41,7 @@
                             @foreach ($taskLists->where('type', 'private') as $taskList)
                                 <option value="{{ old('task_list_id', $taskList->id) }}"
                                     @if ($taskList->id == $myTaskList) selected @endif>
-                                    {{ $taskList->name }}
+                                    {{ ucfirst($taskList->name) }}
                                 </option>
                             @endforeach
                         </optgroup>
@@ -49,7 +49,7 @@
                             @foreach ($taskLists->where('type', 'shared') as $taskList)
                                 <option value="{{ old('task_list_id', $taskList->id) }}"
                                     @if ($taskList->id == $myTaskList) selected @endif>
-                                    {{ $taskList->name }} </option>
+                                    {{ ucfirst($taskList->name) }} </option>
                             @endforeach
                         </optgroup>
                     </select>

@@ -9,7 +9,7 @@ $(document).ready(function () {
 
             const infoMessage = $btn.data('info');
             const popUpContainer = `
-                <div class="info-popup absolute left-1/2 top-full mt-2 -translate-x-1/2 z-50 bg-slate-800 text-white text-sm rounded-lg shadow-lg px-4 py-2 border border-blue-500 whitespace-nowrap">
+                <div class="info-popup absolute font-semibold left-1/2 top-full mt-2 -translate-x-1/2 z-50 bg-slate-800 text-white text-sm rounded-lg shadow-lg px-4 py-2 border border-blue-500 whitespace-nowrap">
                     ${infoMessage}
                 </div>
             `;
