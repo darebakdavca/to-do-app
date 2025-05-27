@@ -20,11 +20,19 @@ class TaskList extends Model {
         'updated_at' => 'datetime'
     ];
 
-    public function user(): BelongsTo {
+    public function users() {
+        return $this->belongsToMany(User::class)->withTimestamps();
+    }
+
+    public function owner(): BelongsTo {
         return $this->belongsTo(User::class);
     }
 
     public function tasks(): HasMany {
         return $this->hasMany(Task::class);
+    }
+
+    public function invitations(): HasMany {
+        return $this->hasMany(Invitation::class);
     }
 }

@@ -52,7 +52,11 @@ class User extends Authenticatable {
         return $this->belongsToMany(Task::class)->withTimestamps();
     }
 
-    public function taskLists(): HasMany {
+    public function ownedTaskLists(): HasMany {
         return $this->hasMany(TaskList::class);
+    }
+
+    public function taskLists(): BelongsToMany {
+        return $this->belongsToMany(TaskList::class)->withTimestamps();
     }
 }

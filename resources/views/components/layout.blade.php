@@ -8,6 +8,8 @@
         <title>{{ $title ?? '' }} | To Do App</title>
         @vite('resources/css/app.css')
         @vite('resources/js/jquery.js')
+        <link type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+            rel="stylesheet">
     </head>
 
     <body class="h-dvh bg-slate-900 text-gray-100 antialiased">
@@ -18,6 +20,7 @@
             </div>
             <x-footer></x-footer>
         </div>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     </body>
 
 </html>

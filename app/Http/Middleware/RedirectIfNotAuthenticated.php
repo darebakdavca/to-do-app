@@ -19,9 +19,9 @@ class RedirectIfNotAuthenticated {
             !Auth::check() &&
             $path !== '/' &&
             $path !== 'login' &&
-            $path !== 'register'
+            $path !== 'register' && !str_starts_with($path, 'share/accept')
         ) {
-            return response()->view('home');
+            return redirect('/');
         }
         return $next($request);
     }

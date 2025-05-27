@@ -16,7 +16,7 @@
             <div
                 class="{{ $myTaskList->id == $taskList->id ? 'border-white font-bold' : '' }} cursor-pointer border-r-2 border-gray-700 bg-slate-900">
                 <a class="block px-3 py-1.5 hover:bg-slate-800"
-                    href="{{ route('task-lists.show', ['task_list' => $myTaskList]) }}">{{ $myTaskList->name }}</a>
+                    href="{{ route('task-lists.show', ['task_list' => $myTaskList]) }}">{{ ucfirst($myTaskList->name) }}</a>
             </div>
         @endforeach
     </div>
@@ -38,7 +38,7 @@
             <div
                 class="{{ $myTaskList->id == $taskList->id ? 'border-white font-bold' : '' }} cursor-pointer border-r-2 border-gray-700 bg-slate-900">
                 <a class="block px-3 py-1.5 hover:bg-slate-800"
-                    href="{{ route('task-lists.show', ['task_list' => $myTaskList]) }}">{{ $myTaskList->name }}</a>
+                    href="{{ route('task-lists.show', ['task_list' => $myTaskList]) }}">{{ ucfirst($myTaskList->name) }}</a>
             </div>
         @endforeach
     </div>

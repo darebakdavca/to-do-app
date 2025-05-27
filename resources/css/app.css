@@ -13,7 +13,7 @@
     @apply block mb-1 text-base font-medium text-gray-300;
 }
 
-.button {
+@utility button {
     @apply hover:bg-blue-500 rounded bg-blue-600 transition font-semibold flex gap-2 items-center justify-center shadow px-6 py-3 cursor-pointer text-base;
 }
 

@@ -3,7 +3,7 @@
     <x-container>
         <x-slot:title>Register</x-slot:title>
         <x-slot:description>Register your account to create your first task.</x-slot:description>
-        <form class="grid grid-cols-1 gap-4" method="POST" action="/register">
+        <form class="grid grid-cols-1 gap-4" method="POST" action="{{ route('register.create') }}">
             @csrf
             <div>
                 <label class="label" for="name">

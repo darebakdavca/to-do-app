@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TaskList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class TaskListController extends Controller {
     /**
@@ -48,6 +49,9 @@ class TaskListController extends Controller {
             'type' => $validated['type'],
             'user_id' => Auth::user()->id
         ]);
+
+        // Attach the task list to the user
+        Auth::user()->taskLists()->attach($taskList->id);
         return redirect()->route('task-lists.show', ['task_list' => $taskList]);
     }
 
@@ -55,7 +59,10 @@ class TaskListController extends Controller {
      * Display the specified resource.
      */
     public function show(TaskList $taskList) {
-        $taskLists = TaskList::all();
+        $user = Auth::user();
+        $taskLists = $user->ownedTaskLists;
+        // Log the task lists
+        Log::info('TaskLists:', ['taskLists' => $taskLists->toArray()]);
         $tasks = $taskList->tasks;
         session(['taskList' => $taskList->id]);
         return view('home', [
@@ -93,6 +100,11 @@ class TaskListController extends Controller {
      * Remove the specified resource from storage.
      */
     public function destroy(TaskList $taskList) {
-        //
+        Auth::user()->taskLists()->detach($taskList->id);
+
+        $taskList->delete();
+        session()->forget('taskList');
+
+        return redirect()->route('home')->with('status', 'Task list deleted successfully.');
     }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ShareController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TaskListController;
 use Illuminate\Http\Request;
@@ -22,56 +23,38 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Route::get('/', function () {
     if (Auth::check()) {
-        // TODO: check last active taskList from database
         $taskList = session('taskList');
+        if (!$taskList) {
+            $taskList = Auth::user()->taskLists()->where('type', 'private')->first();
+            if (!$taskList) {
+                $taskList = Auth::user()->taskLists()->where('type', 'shared')->first();
+            }
+            session(['taskList' => $taskList]);
+        }
         return redirect(route('task-lists.show', ['task_list' => $taskList]));
     } else {
         return view('home');
     }
 })->name('home');
 
+Route::get('/share/{task_list}', [ShareController::class, 'index'])->name('share.index');
+Route::get('/share/accept/{token}', [ShareController::class, 'accept'])->name('share.accept');
+Route::post('/share/send', [ShareController::class, 'send'])->name('share.send');
+
 Route::post('/tasks/{task}/complete', [TaskController::class, 'complete'])->name('tasks.complete');
 Route::resource('tasks', TaskController::class);
-
 Route::resource('task-lists', TaskListController::class);
 
-use Illuminate\Support\Facades\DB;
-
-
-// Route::get('/user/{id}', function (string $id) {
-//     return 'User ' . $id;
-// })->whereNumber('id');
-
-// Route::get('/user/{name?}', function (?string $name = 'John') {
-//     return $name;
-// });
-
-// Route::get('/user/profile', function () {
-//     return 'hello';
-// })->name('profile');
-
-Route::fallback(function () {
-    return view('404');
-});
-
-
-
-Route::get('/login', function () {
-    return view('login');
-});
-
-Route::post('/login', [LoginController::class, 'authenticate'])->name('login');
+Route::get('/login', [LoginController::class, 'show'])->name('login.index');
+Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
 
 Route::get('/logout', [LogoutController::class, 'logout']);
 
-Route::get('/register', function () {
-    return view('register');
-});
+Route::get('/register', [RegisterController::class, 'show'])->name('register.index');
+Route::post('/register', [RegisterController::class, 'create'])->name('register.create');
 
-Route::post('/register', [RegisterController::class, 'register']);
+Route::fallback(function () {
+    return view('errors.404');
+});

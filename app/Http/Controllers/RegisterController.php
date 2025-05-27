@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller {
-    public function register(Request $request): RedirectResponse {
+    public function create(Request $request): RedirectResponse {
         $credentials = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
@@ -29,17 +29,32 @@ class RegisterController extends Controller {
             'password' => Hash::make($credentials['password1'])
         ]);
 
+
         $taskList = TaskList::create([
             'name' => 'My tasks',
-            'description' => 'Default personal task list',
+            'description' => 'Your default personal task list.',
             'type' => 'private',
             'user_id' => $user->id,
         ]);
+
+        $sharedTaskList = TaskList::create([
+            'name' => 'Assigned to me',
+            'description' => 'Tasks that are assigned to you across all shared task lists.',
+            'type' => 'shared',
+            'user_id' => $user->id,
+        ]);
+
+        $user->taskLists()->attach($taskList->id);
+        $user->taskLists()->attach($sharedTaskList->id);
 
         session(['taskList' => $taskList]);
 
         Auth::login($user);
 
-        return redirect()->intended('/task-list/' . $taskList->id);
+        return redirect()->route('task-lists.show', ['task_list' => $taskList])->with('status', 'Welcome, ' . $user->name . '!');
+    }
+
+    public function show() {
+        return view('register');
     }
 }

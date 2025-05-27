@@ -11,9 +11,27 @@
             </div>
         @else
             <a class="header-link {{ request()->is('login') ? 'border-blue-500' : 'border-transparent' }}"
-                href="/login">Login</a>
+                href="{{ route('login.index') }}">Login</a>
             <a class="header-link {{ request()->is('register') ? 'border-blue-500' : 'border-transparent' }}"
-                href="/register">Register</a>
+                href="{{ route('register.index') }}">Register</a>
         @endauth
     </div>
+    @if (session('status'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Toastify({
+                    text: @json(session('status')),
+                    duration: 4000,
+                    gravity: "top",
+                    position: "center",
+                    style: {
+                        borderRadius: '0.7rem',
+                        fontWeight: 'bold',
+                        padding: '0.7rem 2rem',
+                        fontSize: '1.2rem'
+                    }
+                }).showToast();
+            });
+        </script>
+    @endif
 </div>
