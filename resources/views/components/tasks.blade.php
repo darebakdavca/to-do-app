@@ -92,7 +92,13 @@
                 Add Task
             </a>
         </div>
-        <div>{{ $taskList->description }}</div>
+        <div>
+            @if (!empty($taskList->description))
+                {{ $taskList->description }}
+            @else
+                <i class="text-gray-400">No task list description</i>
+            @endif
+        </div>
     </div>
     @if (isset($tasks) && count($tasks) > 0)
         <div class="flex flex-col gap-2">
