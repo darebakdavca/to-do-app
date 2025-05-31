@@ -91,7 +91,7 @@ class TaskListController extends Controller {
         ]);
 
         if ($validated['updated_at'] != $taskList->updated_at) {
-            return back()->with(['status' => 'This task list was modified by another user. Please reload and try again.']);
+            return back()->with(['status' => 'This task list was modified by another user. Please try again.']);
         }
 
         $changes = [];

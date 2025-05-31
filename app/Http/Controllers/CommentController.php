@@ -55,8 +55,23 @@ class CommentController extends Controller {
      */
     public function update(Request $request, Comment $comment) {
         $validated = $request->validate([
-            'content' => ['required', 'string', 'max:255']
+            'content' => ['required', 'string', 'max:255'],
+            'updated_at' => ['required']
         ]);
+
+        if ($validated['updated_at'] != $comment->updated_at) {
+            return back()->with(['status' => 'This comment was modified by another user. Please try again.']);
+        }
+
+        $changes = [];
+        if ($comment->content !== $validated['content']) {
+            $changes[] = 'content';
+        }
+
+        if (empty($changes)) {
+            return redirect()->route('task-lists.show', ['task_list' => session('taskList')])->with('status', 'No changes were made to the comment.');
+        }
+
         $comment->update([
             'content' => $validated['content']
         ]);

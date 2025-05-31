@@ -19,6 +19,7 @@
                         <div class="error-msg">{{ $message }}</div>
                     @enderror
                 </div>
+                <input name="updated_at" type="hidden" value="{{ $comment->updated_at }}">
                 <div class="flex gap-2 text-white">
                     <button class="button" type="submit">Save</button>
                     <a class="cancel-button" id="close-btn" type="button"
