@@ -71,8 +71,37 @@ class TaskController extends Controller {
             'description' => ['nullable', 'string', 'max:1000'],
             'due_date' => ['nullable', 'date'],
             'task_list_id' => ['required', 'exists:task_lists,id'],
-
+            'updated_at' => ['required']
         ]);
+
+        if ($validated['updated_at'] != $task->updated_at) {
+            return back()->with(['status' => 'This task was modified by another user. Please entry again your changes.']);
+        }
+
+        $changes = [];
+        if ($task->name !== $validated['name']) {
+            $changes[] = 'name';
+        }
+        if ($task->description !== $validated['description']) {
+            $changes[] = 'description';
+        }
+        if ($task->due_date !== $validated['due_date']) {
+            $changes[] = 'due_date';
+        }
+        if ($task->task_list_id !== $validated['task_list_id']) {
+            $changes[] = 'task_list_id';
+        }
+
+        $oldAssignees = $task->users()->pluck('users.id')->sort()->values()->toArray();
+        $newAssignees = collect($request->input('assignees', []))->map(fn($id) => (int)$id)->sort()->values()->toArray();
+        if ($oldAssignees !== $newAssignees) {
+            $changes[] = 'assignees';
+        }
+
+        if (empty($changes)) {
+            return redirect()->route('task-lists.show', ['task_list' => session('taskList')])->with('status', 'No changes were made to the task.');
+        }
+
         $task->update([
             'name' => $validated['name'],
             'description' => $validated['description'] ?? null,
@@ -82,6 +111,7 @@ class TaskController extends Controller {
 
         $assignees = $request->input('assignees', []);
         $task->users()->sync($assignees);
+        $task->touch();
 
         $taskList = $task->taskList;
 

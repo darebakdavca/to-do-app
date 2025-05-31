@@ -60,7 +60,7 @@ class CommentController extends Controller {
         ]);
 
         if ($validated['updated_at'] != $comment->updated_at) {
-            return back()->with(['status' => 'This comment was modified by another user. Please try again.']);
+            return back()->with(['status' => 'This comment was modified by another user. Please entry your changes again.']);
         }
 
         $changes = [];
