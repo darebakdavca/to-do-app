@@ -22,9 +22,8 @@ class TaskListController extends Controller {
      */
     public function create(Request $request) {
         $type = $request->query('type');
-        $taskList = $request->query('task-list');
         if ($type == 'shared' | $type == 'private') {
-            return view('newTaskList', ['type' => $type, 'taskList' => $taskList]);
+            return view('newTaskList', ['type' => $type]);
         }
     }
 
@@ -55,16 +54,19 @@ class TaskListController extends Controller {
      */
     public function show(TaskList $taskList) {
         $user = Auth::user();
-        Log::info('current timezone', ['timezone' => config('app.timezone')]);
         $hasAccess = $taskList->users()->where('user_id', $user->id)->exists();
 
         if (!$hasAccess) {
+            session()->forget('taskList');
             abort(403, 'You do not have access to this task list.');
         }
 
         $taskLists = $user->taskLists;
         $tasks = $taskList->tasks;
-        session(['taskList' => $taskList->id]);
+        session(['taskList' => $taskList]);
+        session(['previous_url' => url()->current()]);
+        Log::info("Current URL: " . url()->current() . ", Previous URL: " . session('previous_url'));
+        Log::info("Task List ID: " . $taskList->id . ", Task List Name: " . $taskList->name);
         return view('home', [
             'taskList' => $taskList,
             'taskLists' => $taskLists,
@@ -125,7 +127,8 @@ class TaskListController extends Controller {
 
         $taskList->delete();
         session()->forget('taskList');
+        Log::info('previous_url: ' . session('previous_url'));
 
-        return redirect()->route('home')->with('status', 'Task list deleted successfully.');
+        return redirect(route('home'))->with('status', 'Task list deleted successfully.');
     }
 }

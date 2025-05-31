@@ -20,7 +20,8 @@ class TaskController extends Controller {
      * Show the form for creating a new resource.
      */
     public function create(Request $request) {
-        $taskList = $request->query('task-list');
+        $taskListId = $request->query('task-list');
+        $taskList = TaskList::find($taskListId);
         $user = Auth::user();
         $taskLists = $user->taskLists;
         return view('new', ['taskLists' => $taskLists, 'myTaskList' => $taskList]);
@@ -42,6 +43,11 @@ class TaskController extends Controller {
             'due_date' => $validated['due_date'] ?? null,
             'task_list_id' => $validated['task_list_id'],
         ]);
+
+        $assignees = $request->input('assignees', []);
+        $task->users()->sync($assignees);
+        $task->touch();
+
         $taskList = $task->taskList;
 
         return redirect()->route('task-lists.show', ['task_list' => $taskList])->with('status', 'Task created successfully.');
@@ -54,11 +60,33 @@ class TaskController extends Controller {
         //
     }
 
+    public function filter(Request $request, string $filterType) {
+        $taskLists = Auth::user()->taskLists;
+        $taskList = TaskList::find(session('taskList'));
+
+
+        if (!empty($filterType)) {
+            if ($filterType === 'assigned') {
+                $tasks = Auth::user()->tasks;
+            } else if ($filterType === 'planned') {
+                $tasks = Auth::user()->tasks()->whereNotNull('due_date')->get();
+            } else {
+                return abort('404');
+            }
+            session(['wasFilterView' => true]);
+            session(['filterType' => $filterType]);
+            session(['previous_url' => url()->current()]);
+            return view('filter', ['taskLists' => $taskLists, 'filterType' => $filterType, 'taskList' => $taskList, 'tasks' => $tasks]);
+        } else {
+            return abort('404');
+        }
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Task $task) {
-        $taskLists = TaskList::all();
+        $taskLists = Auth::user()->taskLists;
         return view('edit', ['task' => $task, 'taskLists' => $taskLists]);
     }
 
@@ -115,7 +143,7 @@ class TaskController extends Controller {
 
         $taskList = $task->taskList;
 
-        return redirect()->route('task-lists.show', ['task_list' => $taskList])->with('status', 'Task updated successfully.');
+        return redirect(session('previous_url', route('task-lists.show', ['task_list' => $taskList])))->with('status', 'Task updated successfully.');
     }
 
     public function complete(Task $task) {

@@ -24,6 +24,9 @@
                     duration: 4000,
                     gravity: "top",
                     position: "center",
+                    offset: {
+                        y: 20,
+                    },
                     style: {
                         borderRadius: '0.7rem',
                         fontWeight: 'bold',

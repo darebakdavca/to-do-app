@@ -28,24 +28,26 @@
                     <textarea class="input @error('description') border-red-500 @else border-slate-600 @enderror !h-52"
                         id="description" name="description">{{ old('description', $task->description) }}</textarea>
                 </div>
-                <div>
-                    <p class="label">
-                        Assign to:
-                    </p>
-                    @foreach ($task->taskList->users as $user)
-                        <div class="mb-1 flex items-center gap-2 font-semibold">
-                            <input
-                                class="h-4 w-4 rounded border-slate-600 bg-slate-800 accent-blue-600 focus:ring-2 focus:ring-blue-500"
-                                id="user-{{ $user->id }}" name="assignees[]" type="checkbox"
-                                value="{{ $user->id }}"
-                                @if (in_array($user->id, old('assignees', $task->users->pluck('id')->toArray() ?? []))) checked @endif>
-                            <label class="cursor-pointer text-slate-200"
-                                for="user-{{ $user->id }}">
-                                {{ $user->name }}
-                            </label>
-                        </div>
-                    @endforeach
-                </div>
+                @if ($task->taskList->type === 'shared')
+                    <div>
+                        <p class="label">
+                            Assign to:
+                        </p>
+                        @foreach ($task->taskList->users as $user)
+                            <div class="mb-1 flex items-center gap-2 font-semibold">
+                                <input
+                                    class="h-4 w-4 rounded border-slate-600 bg-slate-800 accent-blue-600 focus:ring-2 focus:ring-blue-500"
+                                    id="user-{{ $user->id }}" name="assignees[]" type="checkbox"
+                                    value="{{ $user->id }}"
+                                    @if (in_array($user->id, old('assignees', $task->users->pluck('id')->toArray() ?? []))) checked @endif>
+                                <label class="cursor-pointer text-slate-200"
+                                    for="user-{{ $user->id }}">
+                                    {{ $user->name }}
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
                 <div>
                     <label class="label" for="due_date">
                         Due date
@@ -86,7 +88,7 @@
                 <div class="flex gap-2 text-white">
                     <button class="button" type="submit">Save</button>
                     <a class="cancel-button" id="close-btn" type="button"
-                        href="{{ route('task-lists.show', ['task_list' => $task->task_list_id]) }}">Cancel</a>
+                        href="{{ session('previous_url', route('home')) }}">Cancel</a>
                 </div>
             </form>
         </div>

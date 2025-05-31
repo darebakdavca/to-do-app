@@ -8,14 +8,14 @@
                 @csrf
                 @method('PUT')
                 <div>
-                    <label class="label" for="name">
+                    <label class="label" for="content">
                         Content
                     </label>
                     <input
-                        class="input @error('name') border-red-500 @else border-slate-600 @enderror"
-                        id="name" name="content" type="text"
+                        class="input @error('content') border-red-500 @else border-slate-600 @enderror"
+                        id="content" name="content" type="text"
                         value="{{ old('content', $comment->content) }}" aria-required="true">
-                    @error('name')
+                    @error('content')
                         <div class="error-msg">{{ $message }}</div>
                     @enderror
                 </div>
@@ -23,7 +23,7 @@
                 <div class="flex gap-2 text-white">
                     <button class="button" type="submit">Save</button>
                     <a class="cancel-button" id="close-btn" type="button"
-                        href="{{ route('task-lists.show', ['task_list' => session('taskList')]) }}">Cancel</a>
+                        href="{{ url(session('previous_url')) }}">Cancel</a>
                 </div>
             </form>
         </div>

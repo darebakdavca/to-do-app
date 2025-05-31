@@ -28,7 +28,7 @@
                 <div class="flex gap-2 text-white">
                     <button class="button" type="submit">Create</button>
                     <a class="cancel-button" id="close-btn" type="button"
-                        href="{{ route('task-lists.show', ['task_list' => $taskList]) }}">Cancel</a>
+                        href="{{ session('previous_url', route('home')) }}">Cancel</a>
                 </div>
             </form>
         </div>

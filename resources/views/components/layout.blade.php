@@ -12,7 +12,7 @@
             rel="stylesheet">
     </head>
 
-    <body class="h-dvh bg-slate-900 text-gray-100 antialiased">
+    <body class="h-dvh overflow-y-scroll bg-slate-900 text-gray-100 antialiased">
         <div class="m-auto grid h-dvh w-full max-w-[1298px] grid-cols-1 grid-rows-[auto_1fr_auto]">
             <x-header></x-header>
             <div class="mt-5">

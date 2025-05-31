@@ -32,8 +32,10 @@ class CommentController extends Controller {
             'task_id' => $validated['task_id'],
             'user_id' => Auth::id(),
         ]);
+
         $taskList = session('taskList');
-        return redirect()->route('task-lists.show', ['task_list' => $taskList])->with('status', 'Comment added successfully.');
+        return redirect(session('previous_url', route('home')))->with('status', 'Comment added successfully.');
+        // return redirect()->route('task-lists.show', ['task_list' => $taskList])->with('status', 'Comment added successfully.');
     }
 
     /**
@@ -43,10 +45,15 @@ class CommentController extends Controller {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(Comment $comment) {
+        // $currentUrl = url()->current();
+        // $previousUrl = url()->previous();
+        // Log::info("Current URL: $currentUrl, Previous URL: $previousUrl");
+
+        // if (session('previous_url') !== $previousUrl && $previousUrl !== $currentUrl) {
+        //     session(['previous_url' => $previousUrl]);
+        // }
         return view('editComment', ['comment' => $comment]);
     }
 
@@ -75,7 +82,7 @@ class CommentController extends Controller {
         $comment->update([
             'content' => $validated['content']
         ]);
-        return redirect()->route('task-lists.show', ['task_list' => session('taskList')])->with('status', 'Comment updated successfully.');
+        return redirect(session('previous_url', route('task-lists.show', ['task_list' => session('taskList')])))->with('status', 'Comment updated successfully.');
     }
 
     /**
@@ -83,6 +90,6 @@ class CommentController extends Controller {
      */
     public function destroy(Comment $comment) {
         $comment->delete();
-        return redirect()->route('task-lists.show', ['task_list' => session('taskList')])->with('status', 'Comment deleted successfully.');
+        return redirect(url(session('previous_url')))->with('status', 'Comment deleted successfully.');
     }
 }

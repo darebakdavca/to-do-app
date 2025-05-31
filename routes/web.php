@@ -45,6 +45,7 @@ Route::get('/share/accept/{token}', [ShareController::class, 'accept'])->name('s
 Route::post('/share/send', [ShareController::class, 'send'])->name('share.send');
 
 Route::post('/tasks/{task}/complete', [TaskController::class, 'complete'])->name('tasks.complete');
+Route::get('/tasks/{filterType}', [TaskController::class, 'filter'])->where('filterType', 'assigned|planned')->name('tasks.filter');
 Route::resource('tasks', TaskController::class);
 
 Route::resource('task-lists', TaskListController::class);

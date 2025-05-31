@@ -1,7 +1,7 @@
 <x-layout>
     <x-slot:title>Create new task</x-slot:title>
     <x-container>
-        <x-slot:title>Create new task</x-slot:title>
+        <x-slot:title>Create new task in {{ ucfirst($myTaskList->name) }} task list</x-slot:title>
         <div class="flex flex-col gap-2">
             <form class="form" action="{{ route('tasks.store') }}" method="post">
                 @csrf
@@ -24,39 +24,38 @@
                     <textarea class="input @error('description') border-red-500 @else border-slate-600 @enderror !h-52"
                         id="description" name="description">{{ old('description') }}</textarea>
                 </div>
+                @if ($myTaskList->type === 'shared')
+                    <div>
+                        <p class="label">
+                            Assign to:
+                        </p>
+                        @foreach ($myTaskList->users as $user)
+                            <div class="mb-1 flex items-center gap-2 font-semibold">
+                                <input
+                                    class="h-4 w-4 rounded border-slate-600 bg-slate-800 accent-blue-600 focus:ring-2 focus:ring-blue-500"
+                                    id="user-{{ $user->id }}" name="assignees[]" type="checkbox"
+                                    value="{{ $user->id }}"
+                                    @if (!empty(old('assignees'))) checked @endif>
+                                <label class="cursor-pointer text-slate-200"
+                                    for="user-{{ $user->id }}">
+                                    {{ $user->name }}
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <input name="assignees[]" type="hidden" value="{{ Auth::user()->id }}">
+                @endif
                 <div>
                     <label class="label" for="due_date">
                         Due date
                     </label>
                     <input
                         class="input @error('due_date') border-red-500 @else border-slate-600 @enderror"
-                        id="due_date" name="due_date" type="date" value="{{ old('due_date') }}">
+                        id="due_date" name="due_date" type="date"
+                        value="{{ old('due_date') }}">
                 </div>
-                <div>
-                    <label for="taks_list_id">Task List</label>
-                    <select
-                        class="input @error('task_list_id') border-red-500 @else border-slate-600 @enderror"
-                        id="task_list_id" name="task_list_id">
-                        <optgroup label="Private">
-                            @foreach ($taskLists->where('type', 'private') as $taskList)
-                                <option value="{{ old('task_list_id', $taskList->id) }}"
-                                    @if ($taskList->id == $myTaskList) selected @endif>
-                                    {{ ucfirst($taskList->name) }}
-                                </option>
-                            @endforeach
-                        </optgroup>
-                        <optgroup label="Shared">
-                            @foreach ($taskLists->where('type', 'shared') as $taskList)
-                                <option value="{{ old('task_list_id', $taskList->id) }}"
-                                    @if ($taskList->id == $myTaskList) selected @endif>
-                                    {{ ucfirst($taskList->name) }} </option>
-                            @endforeach
-                        </optgroup>
-                    </select>
-                    @error('task_list_id')
-                        <div class="error-msg">{{ $message }}</div>
-                    @enderror
-                </div>
+                <input name="task_list_id" type="hidden" value="{{ $myTaskList->id }}">
                 <div class="flex gap-2 text-white">
                     <button class="button" type="submit">Create</button>
                     <a class="cancel-button" id="close-btn" type="button"
