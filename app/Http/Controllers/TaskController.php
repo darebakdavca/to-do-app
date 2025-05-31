@@ -44,7 +44,7 @@ class TaskController extends Controller {
         ]);
         $taskList = $task->taskList;
 
-        return redirect()->route('task-lists.show', ['task_list' => $taskList]);
+        return redirect()->route('task-lists.show', ['task_list' => $taskList])->with('status', 'Task created successfully.');
     }
 
     /**
@@ -81,22 +81,18 @@ class TaskController extends Controller {
         ]);
 
         $assignees = $request->input('assignees', []);
-        Log::info('Updating task with assignees', [
-            'task_id' => $task->id,
-            'assignees' => $assignees
-        ]);
         $task->users()->sync($assignees);
 
         $taskList = $task->taskList;
 
-        return redirect()->route('task-lists.show', ['task_list' => $taskList]);
+        return redirect()->route('task-lists.show', ['task_list' => $taskList])->with('status', 'Task updated successfully.');
     }
 
     public function complete(Task $task) {
         $task->complete = !$task->complete;
         $task->save();
 
-        return back();
+        return back()->with('status', 'Task status updated successfully.');
     }
 
 
@@ -104,8 +100,7 @@ class TaskController extends Controller {
      * Remove the specified resource from storage.
      */
     public function destroy(Task $task) {
-        $taskList = $task->taskList;
         $task->delete();
-        return redirect()->route('task-lists.show', ['task_list' => $taskList]);
+        return redirect()->route('task-lists.show', ['task_list' => session('taskList')])->with('status', 'Task deleted successfully.');
     }
 }

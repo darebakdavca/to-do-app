@@ -95,7 +95,7 @@
         <div>{{ $taskList->description }}</div>
     </div>
     @if (isset($tasks) && count($tasks) > 0)
-        <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-2">
             <div class="flex flex-col gap-2">
                 <h4 class="font-semibold">Open:</h4>
                 <div class="h-[1px] bg-slate-400"></div>

@@ -47,7 +47,7 @@ class TaskListController extends Controller {
 
         // Attach the task list to the user
         Auth::user()->taskLists()->attach($taskList->id);
-        return redirect()->route('task-lists.show', ['task_list' => $taskList]);
+        return redirect()->route('task-lists.show', ['task_list' => $taskList])->with('status', 'Task list created successfully.');
     }
 
     /**
@@ -55,7 +55,7 @@ class TaskListController extends Controller {
      */
     public function show(TaskList $taskList) {
         $user = Auth::user();
-
+        Log::info('current timezone', ['timezone' => config('app.timezone')]);
         $hasAccess = $taskList->users()->where('user_id', $user->id)->exists();
 
         if (!$hasAccess) {
@@ -93,7 +93,7 @@ class TaskListController extends Controller {
             'name' => $validated['name'],
             'description' => $validated['description'],
         ]);
-        return redirect()->route('task-lists.show', ['task_list' => $taskList]);
+        return redirect()->route('task-lists.show', ['task_list' => $taskList])->with('status', 'Task list updated successfully.');
     }
 
     /**

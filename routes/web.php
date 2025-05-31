@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\RegisterController;
@@ -45,7 +46,10 @@ Route::post('/share/send', [ShareController::class, 'send'])->name('share.send')
 
 Route::post('/tasks/{task}/complete', [TaskController::class, 'complete'])->name('tasks.complete');
 Route::resource('tasks', TaskController::class);
+
 Route::resource('task-lists', TaskListController::class);
+
+Route::resource('comments', CommentController::class);
 
 Route::get('/login', [LoginController::class, 'show'])->name('login.index');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');

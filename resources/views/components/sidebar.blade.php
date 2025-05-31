@@ -1,4 +1,4 @@
-<div class="w-max-52 flex w-60 flex-col gap-4">
+<aside class="w-max-52 flex w-60 flex-col gap-4">
     <div class="rounded-lg bg-slate-950 p-3">
         <div class="mb-2 flex items-center justify-between">
 
@@ -80,4 +80,4 @@
             </div>
         @endforeach
     </div>
-</div>
+</aside>
