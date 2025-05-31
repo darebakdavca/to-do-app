@@ -27,6 +27,7 @@
                         id="description" name="description">{{ old('description', $taskList->description) }}</textarea>
                 </div>
                 <input name="type" type="hidden" value="{{ $taskList->type }}">
+                <input name="updated_at" type="hidden" value="{{ $taskList->updated_at }}">
                 <div class="flex gap-2 text-white">
                     <button class="button" type="submit">Save</button>
                     <a class="cancel-button" id="close-btn" type="button"

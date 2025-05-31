@@ -86,8 +86,29 @@ class TaskListController extends Controller {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:1000'],
-            'type' => ['required', 'in:private,shared']
+            'type' => ['required', 'in:private,shared'],
+            'updated_at' => ['required']
         ]);
+
+        if ($validated['updated_at'] != $taskList->updated_at) {
+            return back()->with(['status' => 'This task list was modified by another user. Please reload and try again.']);
+        }
+
+        $changes = [];
+        if ($taskList->name !== $validated['name']) {
+            $changes[] = 'name';
+        }
+        if ($taskList->description !== $validated['description']) {
+            $changes[] = 'description';
+        }
+        if ($taskList->type !== $validated['type']) {
+            $changes[] = 'type';
+        }
+
+        if (empty($changes)) {
+            return redirect()->route('task-lists.show', ['task_list' => $taskList])
+                ->with('status', 'No changes were made to the task list.');
+        }
 
         $taskList->update([
             'name' => $validated['name'],
