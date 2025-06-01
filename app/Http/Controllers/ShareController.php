@@ -15,6 +15,10 @@ class ShareController extends Controller {
     public function show(TaskList $taskList) {
         $token = Str::random(40);
         $link = route('share.accept', ['token' => $token]);
+        Invitation::create([
+            'task_list_id' => $taskList->id,
+            'token' => $token
+        ]);
 
         return view('share', ['taskList' => $taskList, 'link' => $link, 'token' => $token]);
     }
@@ -22,7 +26,6 @@ class ShareController extends Controller {
     public function send(Request $request) {
         $validated = $request->validate(
             [
-                'email' => ['required', 'email'],
                 'link' => ['required', 'active_url'],
                 'token' => ['required', 'alpha_num']
             ]
@@ -32,11 +35,7 @@ class ShareController extends Controller {
         $taskList = TaskList::findOrFail($taskListId);
         $link = $validated['link'];
         $token = $validated['token'];
-        Invitation::create([
-            'email' => $validated['email'],
-            'task_list_id' => $taskListId,
-            'token' => $token
-        ]);
+
         Mail::to($validated['email'])->send(new TaskListInvite($user, $taskList, $link));
         return redirect(route('task-lists.show', ['task_list' => $taskList]))
             ->with('status', 'Invitation sent to user ' . $validated['email'] . '.');

@@ -15,13 +15,14 @@
     <body class="h-dvh overflow-y-scroll bg-slate-900 text-gray-100 antialiased">
         <div class="m-auto grid h-dvh w-full max-w-[1298px] grid-cols-1 grid-rows-[auto_1fr_auto]">
             <x-header></x-header>
-            <div class="mt-5">
+            <div class="m-5 mt-0 md:mt-5">
                 {{ $slot }}
             </div>
             <x-footer></x-footer>
         </div>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
         @vite('resources/js/infoPopUp.js')
+        @vite('resources/js/sidebar.js')
     </body>
 
 </html>

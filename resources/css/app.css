@@ -5,8 +5,12 @@
     @apply border-b-2 hover:border-blue-500;
 }
 
+@utility a-link {
+    @apply underline-offset-2 underline hover:text-blue-500;
+}
+
 @utility input {
-    @apply mt-1 w-full rounded-lg font-semibold border bg-slate-800 px-3 py-3 text-base text-gray-100 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500;
+    @apply mt-1 w-full rounded-lg border font-semibold bg-slate-800 px-3 py-3 text-base text-gray-100 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500;
 }
 
 .label {

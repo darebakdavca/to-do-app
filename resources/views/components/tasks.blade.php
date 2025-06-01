@@ -1,13 +1,13 @@
-<div class="flex flex-col gap-4 self-start rounded-lg bg-slate-700 p-5">
+<div class="flex flex-col gap-4 self-start rounded-lg bg-slate-700 p-3 md:p-5">
     <div>
         <div class="flex items-center justify-between">
-            <div class="flex grow gap-2">
+            <div class="flex grow justify-between gap-2 md:justify-start">
                 <h2 class="text-2xl font-semibold">
                     {{ empty($filterType) ? ucfirst($taskList->name ?? '') : ucfirst($filterType) }}
                 </h2>
                 @if (empty($filterType))
-                    <div class="flex grow items-center justify-between">
-                        <div>
+                    <div class="flex grow items-center justify-end md:justify-between">
+                        <div class="">
                             @if ($taskList->user_id === Auth::user()->id)
                                 <div class="flex items-center justify-center gap-2">
                                     <div class="relative">
@@ -73,7 +73,7 @@
                             @endif
                         </div>
                         @if ($taskList->type === 'shared')
-                            <div class="flex items-center gap-1 pr-5">
+                            <div class="hidden items-center gap-1 pr-5 md:flex">
                                 @foreach ($taskList->users as $user)
                                     <div class="relative">
                                         <button class="task-button info-btn hover:bg-slate-800"
@@ -90,7 +90,7 @@
                 @endif
             </div>
             @if (empty($filterType))
-                <a class="button" type="button"
+                <a class="button hidden md:flex" type="button"
                     href="{{ route('tasks.create', ['task-list' => $taskList]) }}">
                     <svg class="size-6" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -116,6 +116,33 @@
                 <i class="text-gray-400">No task list description</i>
             @endif
         </div>
+
+        @if (empty($filterType))
+            @if ($taskList->type === 'shared')
+                <div class="mt-3 flex items-center gap-1 pr-5 md:hidden">
+                    @foreach ($taskList->users as $user)
+                        <div class="relative">
+                            <button class="task-button info-btn hover:bg-slate-800"
+                                data-info="{{ $user->name }}">
+                                <img src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-user-web-flaticons-flat-flat-icons-2.png"
+                                    alt="external-user-web-flaticons-flat-flat-icons-2"
+                                    width="24" height="24" />
+                            </button>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+            <a class="button mt-3 md:hidden" type="button"
+                href="{{ route('tasks.create', ['task-list' => $taskList]) }}">
+                <svg class="size-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+
+                Add Task
+            </a>
+        @endif
     </div>
     @if (isset($tasks) && count($tasks) > 0)
         <div class="flex flex-col gap-2">
@@ -147,4 +174,3 @@
             one!</i>
     @endif
 </div>
-@vite('resources/js/taskDetail.js')

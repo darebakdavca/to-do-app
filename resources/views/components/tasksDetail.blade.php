@@ -52,7 +52,7 @@
         </div>
     </div>
     <div class="task-detail hidden bg-slate-800 p-3" data-task-id="{{ $task->id }}">
-        <div class="ml-4 flex flex-col gap-2">
+        <div class="flex flex-col gap-2">
             <div class="flex items-start gap-4">
                 <div class="mt-0.5">
                     <svg class="size-5" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -82,7 +82,7 @@
                 @endif
             </div>
             @if ($task->taskList->type === 'shared')
-                <div class="relative flex items-center justify-between gap-4">
+                <div class="relative flex flex-wrap items-center justify-between gap-2 md:gap-4">
                     <div class="flex items-center gap-4">
                         Assigned to:
                         <div class="flex gap-2">
@@ -100,9 +100,9 @@
                             @endforelse
                         </div>
                     </div>
-                    <div class="flex flex-col">
+                    <div class="flex grow flex-col">
                         <button
-                            class="comment-detail-button flex w-52 cursor-pointer items-center justify-center gap-2 rounded bg-slate-600 px-3 py-1.5 hover:bg-slate-500"
+                            class="comment-detail-button w-ful flex grow cursor-pointer items-center justify-center gap-2 rounded bg-slate-600 px-3 py-1.5 hover:bg-slate-500"
                             data-task-id="{{ $task->id }}">
                             <svg class="size-5" xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">

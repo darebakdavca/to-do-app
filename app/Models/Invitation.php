@@ -10,7 +10,6 @@ class Invitation extends Model {
     use HasFactory;
 
     protected $fillable = [
-        'email',
         'task_list_id',
         'token',
         'accepted_at',
