@@ -32,6 +32,5 @@
                 Generate new link
             </button>
         </div>
-        @vite(['resources/js/share.js'])
     </x-container>
 </x-layout>

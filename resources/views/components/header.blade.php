@@ -60,5 +60,4 @@
             });
         </script>
     @endif
-    @vite('resources/js/profileMenu.js')
 </div>

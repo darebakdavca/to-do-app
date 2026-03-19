@@ -17,6 +17,25 @@ A collaborative to-do list web application built with Laravel. Users can create 
 
 ---
 
+## Local Development
+
+1. Install dependencies:
+   `brew install composer php@8.4`
+2. Bootstrap the app:
+   `cp .env.example .env`
+   `touch database/database.sqlite`
+   `PATH="/opt/homebrew/opt/php@8.4/bin:$PATH" composer install`
+   `PATH="/opt/homebrew/opt/php@8.4/bin:$PATH" php artisan key:generate`
+   `PATH="/opt/homebrew/opt/php@8.4/bin:$PATH" php artisan migrate`
+   `npm install`
+3. Start the app:
+   `PATH="/opt/homebrew/opt/php@8.4/bin:$PATH" php artisan serve`
+   `npm run dev`
+
+The tracked local example uses SQLite and `MAIL_MAILER=log`, so the app runs without MySQL or Mailpit.
+
+---
+
 ## License
 
 [MIT](LICENSE)

@@ -26,7 +26,8 @@ class ShareController extends Controller {
     public function send(Request $request) {
         $validated = $request->validate(
             [
-                'link' => ['required', 'active_url'],
+                'email' => ['required', 'email'],
+                'link' => ['required', 'url'],
                 'token' => ['required', 'alpha_num']
             ]
         );
@@ -45,14 +46,14 @@ class ShareController extends Controller {
     public function accept(string $token) {
         $invitation = Invitation::where('token', $token)->first();
         if (!$invitation) {
-            $statusMesage = 'Invalid or expired invitation.';
+            return redirect()->route('home')->with('status', 'Invalid or expired invitation.');
         }
         if ($invitation->accepted_at) {
-            $statusMesage = 'Invitation already accepted.';
+            return redirect()->route('home')->with('status', 'Invitation already accepted.');
         }
         $user = Auth::user();
         if (!$user) {
-            session('callback', route('share.accept', ['token' => $token]));
+            session(['callback' => route('share.accept', ['token' => $token])]);
             return redirect()
                 ->route('login.index', ['callback' => route('share.accept', ['token' => $token])])
                 ->with('status', 'Please log in to accept the invitation.');

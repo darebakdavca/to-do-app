@@ -6,8 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link type="image/x-icon" href="{{ asset('favicon.ico') }}" rel="icon">
         <title>{{ $title ?? '' }} | To Do App</title>
-        @vite('resources/css/app.css')
-        @vite('resources/js/jquery.js')
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
         <link type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
             rel="stylesheet">
     </head>
@@ -21,8 +20,6 @@
             <x-footer></x-footer>
         </div>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-        @vite('resources/js/infoPopUp.js')
-        @vite('resources/js/sidebar.js')
     </body>
 
 </html>
