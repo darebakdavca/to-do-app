@@ -36,24 +36,6 @@
         @endauth
     </div>
     @if (session('status'))
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                Toastify({
-                    text: @json(session('status')),
-                    duration: 3000,
-                    gravity: "top",
-                    position: "center",
-                    offset: {
-                        y: 20,
-                    },
-                    style: {
-                        borderRadius: '0.7rem',
-                        fontWeight: 'bold',
-                        padding: '0.7rem 2rem',
-                        fontSize: '1.2rem'
-                    }
-                }).showToast();
-            });
-        </script>
+        <div class="hidden" data-status-toast data-status="{{ session('status') }}"></div>
     @endif
 </div>

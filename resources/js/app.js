@@ -4,6 +4,7 @@ import './infoPopUp';
 import './profileMenu';
 import './share';
 import './sidebar';
+import './statusToast';
 import './taskDetail';
 import './passwordToggle';
 
