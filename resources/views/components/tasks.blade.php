@@ -73,7 +73,7 @@
                             @endif
                         </div>
                         @if ($taskList->type === 'shared')
-                            <div class="hidden items-center gap-1 pr-5 md:flex">
+                            <div class="hidden items-center gap-0 pr-5 md:flex">
                                 @foreach ($taskList->users as $user)
                                     <div class="relative">
                                         <button class="task-button info-btn hover:bg-slate-800"
@@ -117,7 +117,7 @@
 
         @if (empty($filterType))
             @if ($taskList->type === 'shared')
-                <div class="mt-3 flex items-center gap-1 pr-5 md:hidden">
+                <div class="mt-3 flex items-center gap-0 pr-5 md:hidden">
                     @foreach ($taskList->users as $user)
                         <div class="relative">
                             <button class="task-button info-btn hover:bg-slate-800"

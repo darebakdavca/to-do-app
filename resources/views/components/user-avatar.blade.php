@@ -1,7 +1,4 @@
-@props([
-    'name',
-    'size' => 'size-6 text-[10px]',
-])
+@props(['name', 'size' => 'size-6 text-[10px]'])
 
 @php
     $parts = preg_split('/\s+/', trim($name)) ?: [];
@@ -13,6 +10,6 @@
 @endphp
 
 <span
-    class="{{ $size }} inline-flex shrink-0 items-center justify-center rounded-full bg-blue-600 font-semibold text-white">
+    class="{{ $size }} inline-flex shrink-0 items-center justify-center rounded-full bg-gray-500 font-semibold text-white">
     {{ $initials }}
 </span>

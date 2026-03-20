@@ -7,9 +7,11 @@ $(document).ready(function () {
         if (isOpen) {
             $(this).show();
             $(`.task-actions[data-task-id="${taskId}"]`).show();
+            $(`.task-assignees[data-task-id="${taskId}"]`).hide();
         } else {
             $(this).hide();
             $(`.task-actions[data-task-id="${taskId}"]`).hide();
+            $(`.task-assignees[data-task-id="${taskId}"]`).show();
         }
     }
     );
@@ -27,10 +29,12 @@ $(document).ready(function () {
         if (detail.is(':visible')) {
             detail.slideUp();
             taskActions.hide();
+            $(`.task-assignees[data-task-id="${taskId}"]`).show();
             localStorage.setItem(`task-detail-open-${taskId}`, 'false');
         } else {
             detail.slideDown();
             taskActions.show();
+            $(`.task-assignees[data-task-id="${taskId}"]`).hide();
             localStorage.setItem(`task-detail-open-${taskId}`, 'true');
         }
     });

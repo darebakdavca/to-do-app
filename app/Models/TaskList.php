@@ -29,7 +29,9 @@ class TaskList extends Model {
     }
 
     public function tasks(): HasMany {
-        return $this->hasMany(Task::class);
+        return $this->hasMany(Task::class)
+            ->orderByRaw('due_date IS NULL')
+            ->orderBy('due_date');
     }
 
     public function invitations(): HasMany {

@@ -1,7 +1,7 @@
 <div class="mt-1 overflow-x-hidden overflow-y-clip rounded-md">
     <div class="task-detail-button flex cursor-pointer items-center justify-between gap-4 bg-slate-800 hover:bg-slate-900"
         data-task-id="{{ $task->id }}">
-        <div class="flex items-center gap-4 p-3">
+        <div class="flex items-center gap-4 px-3 py-2">
             <form class="flex items-center" method="POST"
                 action="{{ route('tasks.complete', $task) }}">
                 @csrf
@@ -23,12 +23,26 @@
                     </button>
                 @endif
             </form>
-            <p>
+            <div class="grid gap-0">
                 {{ $task->name }}
-            </p>
+                @if ($task->due_date)
+                    <x-task-due-date format="D.M.YYYY" :due-date="$task->due_date" />
+                @endif
+            </div>
+        </div>
+        <div class="task-assignees flex items-center justify-end gap-1.5 pr-3"
+            data-task-id="{{ $task->id }}">
+            @forelse ($task->users as $assignee)
+                <div class="relative">
+                    <button class="">
+                        <x-user-avatar :name="$assignee->name" />
+                    </button>
+                </div>
+            @empty
+            @endforelse
         </div>
         <div class="task-actions hidden px-1.5" data-task-id="{{ $task->id }}">
-            <div class="flex items-center justify-end gap-2">
+            <div class="flex items-center justify-end gap-1">
                 <a class="task-button edit-task-button" href="{{ route('tasks.edit', $task) }}">
                     <svg class="size-5" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -51,7 +65,7 @@
             </div>
         </div>
     </div>
-    <div class="task-detail hidden bg-slate-800 p-3" data-task-id="{{ $task->id }}">
+    <div class="task-detail hidden bg-slate-800 px-3 py-2" data-task-id="{{ $task->id }}">
         <div class="flex flex-col gap-2">
             <div class="flex items-start gap-4">
                 <div class="mt-0.5">
@@ -67,25 +81,18 @@
                     <i class="text-gray-400">No description</i>
                 @endif
             </div>
-            <div class="flex items-center gap-4">
-
-                <svg class="size-5" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-                </svg>
-
+            {{-- <div class="flex items-center gap-4">
                 @if ($task->due_date)
-                    {{ \Carbon\Carbon::parse($task->due_date)->locale(app()->getLocale())->isoFormat('D. MMMM YYYY') }}
+                    <x-task-due-date :due-date="$task->due_date" />
                 @else
                     <i class="text-gray-400">No due date</i>
                 @endif
-            </div>
+            </div> --}}
             @if ($task->taskList->type === 'shared')
                 <div class="relative flex flex-wrap items-center justify-between gap-2 md:gap-4">
-                    <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-2">
                         Assigned to:
-                        <div class="flex gap-2">
+                        <div class="flex gap-0">
                             @forelse ($task->users as $assignee)
                                 <div class="relative">
                                     <button class="task-button info-btn" data-position="top"
