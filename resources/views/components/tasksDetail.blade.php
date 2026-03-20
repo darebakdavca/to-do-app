@@ -90,9 +90,7 @@
                                 <div class="relative">
                                     <button class="task-button info-btn" data-position="top"
                                         data-info="{{ $assignee->name }}">
-                                        <img src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-user-web-flaticons-flat-flat-icons-2.png"
-                                            alt="external-user-web-flaticons-flat-flat-icons-2"
-                                            width="24" height="24" />
+                                        <x-user-avatar :name="$assignee->name" />
                                     </button>
                                 </div>
                             @empty
@@ -182,9 +180,8 @@
                                     <div class="flex items-center gap-2">
                                         <span
                                             class="text-end text-xs">{{ $comment->user->name }}</span>
-                                        <img src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-user-web-flaticons-flat-flat-icons-2.png"
-                                            alt="external-user-web-flaticons-flat-flat-icons-2"
-                                            width="16" height="16" />
+                                        <x-user-avatar :name="$comment->user->name"
+                                            size="size-4 text-[8px]" />
                                     </div>
                                 </div>
                             </div>

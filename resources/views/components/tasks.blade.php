@@ -78,9 +78,7 @@
                                     <div class="relative">
                                         <button class="task-button info-btn hover:bg-slate-800"
                                             data-info="{{ $user->name }}">
-                                            <img src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-user-web-flaticons-flat-flat-icons-2.png"
-                                                alt="external-user-web-flaticons-flat-flat-icons-2"
-                                                width="24" height="24" />
+                                            <x-user-avatar :name="$user->name" />
                                         </button>
                                     </div>
                                 @endforeach
@@ -124,9 +122,7 @@
                         <div class="relative">
                             <button class="task-button info-btn hover:bg-slate-800"
                                 data-info="{{ $user->name }}">
-                                <img src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-user-web-flaticons-flat-flat-icons-2.png"
-                                    alt="external-user-web-flaticons-flat-flat-icons-2"
-                                    width="24" height="24" />
+                                <x-user-avatar :name="$user->name" />
                             </button>
                         </div>
                     @endforeach
