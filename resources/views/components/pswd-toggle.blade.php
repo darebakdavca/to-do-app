@@ -1,7 +1,7 @@
 @props(['target'])
 
 <button
-    class="password-toggle-button absolute right-3 top-7 -translate-y-1/2 text-slate-300 transition hover:text-white"
+    class="password-toggle-button top-6.5 absolute right-3 -translate-y-1/2 cursor-pointer text-slate-300 transition hover:text-white"
     data-target="{{ $target }}" type="button" aria-label="Show password" aria-pressed="false">
     <svg class="password-toggle-show size-5" xmlns="http://www.w3.org/2000/svg" fill="none"
         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">

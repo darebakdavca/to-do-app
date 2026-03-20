@@ -6,11 +6,10 @@
         tasks.
     </p>
     <div class="flex gap-4">
-        <a class="rounded bg-blue-600 px-6 py-3 font-semibold text-white shadow transition hover:bg-blue-700"
-            href="/register">
+        <a class="button" href="/register">
             Get Started
         </a>
-        <a class="rounded bg-slate-600 px-6 py-3 font-semibold text-white shadow transition hover:bg-slate-700"
+        <a class="rounded-lg bg-slate-600 px-6 py-2 font-semibold text-white shadow transition hover:bg-slate-700"
             href="/login">
             Log In
         </a>
