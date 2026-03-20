@@ -23,7 +23,6 @@ A collaborative to-do list web application built with Laravel. Users can create 
    `brew install composer php@8.4`
 2. Bootstrap the app:
    `cp .env.example .env`
-   `touch database/database.sqlite`
    `PATH="/opt/homebrew/opt/php@8.4/bin:$PATH" composer install`
    `PATH="/opt/homebrew/opt/php@8.4/bin:$PATH" php artisan key:generate`
    `PATH="/opt/homebrew/opt/php@8.4/bin:$PATH" php artisan migrate`
@@ -32,7 +31,37 @@ A collaborative to-do list web application built with Laravel. Users can create 
    `PATH="/opt/homebrew/opt/php@8.4/bin:$PATH" php artisan serve`
    `npm run dev`
 
-The tracked local example uses SQLite and `MAIL_MAILER=log`, so the app runs without MySQL or Mailpit.
+This repo now assumes Postgres everywhere. For local development, point `.env` at Supabase or another Postgres instance before running migrations.
+
+---
+
+## Laravel Cloud Deployment
+
+This application is intended to run on Laravel Cloud with Supabase Postgres.
+
+Important deployment notes:
+
+- Local, test, and production environments should all use Postgres.
+- Runtime traffic should use the exact Supabase Supavisor transaction pooler connection string from the Supabase dashboard in `DATABASE_URL`.
+- Do not use `db.<project-ref>.supabase.co:5432` for Laravel Cloud runtime traffic. The transaction pooler is the correct fit for application traffic.
+- Supabase transaction mode does not support prepared statements, so this repo uses `DB_DISABLE_PREPARES=true` for the `pgsql` connection.
+- `APP_KEY`, `APP_URL`, `DATABASE_URL`, and any real `MAIL_*` settings must be configured as Laravel Cloud environment variables.
+- For migrations, `psql`, `pg_dump`, and other long-lived admin tasks, use Supabase's direct connection or session pooler when appropriate.
+- Laravel Cloud should build frontend assets during deploy, so `public/build` remains ignored in git.
+
+Testing note:
+
+- `phpunit.xml` no longer forces SQLite. Tests now use whatever Postgres connection you provide in the environment.
+
+Suggested Laravel Cloud commands:
+
+Build Commands:
+`composer install --no-dev --optimize-autoloader`
+`npm ci`
+`npm run build`
+
+Deploy Command:
+`php artisan migrate --force`
 
 ---
 
