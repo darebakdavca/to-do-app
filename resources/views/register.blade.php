@@ -29,9 +29,13 @@
                 <label class="label" for="password1">
                     Password
                 </label>
-                <input
-                    class="input @error('password1') border-red-500 @else border-slate-600 @enderror"
-                    id="password1" name="password1" type="password" value="{{ old('password1') }}">
+                <div class="relative">
+                    <input
+                        class="input @error('password1') border-red-500 @else border-slate-600 @enderror pr-12"
+                        id="password1" name="password1" type="password"
+                        value="{{ old('password1') }}">
+                    <x-pswd-toggle target="password1" />
+                </div>
                 @error('password1')
                     <div class="error-msg">{{ $message }}</div>
                 @enderror
@@ -40,9 +44,13 @@
                 <label class="label" for="password2">
                     Password again
                 </label>
-                <input
-                    class="input @error('password2') border-red-500 @else border-slate-600 @enderror"
-                    id="password2" name="password2" type="password" value="{{ old('password2') }}">
+                <div class="relative">
+                    <input
+                        class="input @error('password2') border-red-500 @else border-slate-600 @enderror pr-12"
+                        id="password2" name="password2" type="password"
+                        value="{{ old('password2') }}">
+                    <x-pswd-toggle target="password2" />
+                </div>
                 @error('password2')
                     <div class="error-msg">{{ $message }}</div>
                 @enderror

@@ -5,7 +5,7 @@ import './profileMenu';
 import './share';
 import './sidebar';
 import './taskDetail';
+import './passwordToggle';
 
 window.$ = $;
 window.jQuery = $;
-

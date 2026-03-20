@@ -19,8 +19,12 @@
                 <label class="label" for="password">
                     Password
                 </label>
-                <input class="input @error('email') border-red-500 @else border-slate-600 @enderror"
-                    id="password" name="password" type="password">
+                <div class="relative">
+                    <input
+                        class="input @error('password') border-red-500 @else border-slate-600 @enderror pr-12"
+                        id="password" name="password" type="password">
+                    <x-pswd-toggle target="password" />
+                </div>
                 @error('password')
                     <div class="error-msg">{{ $message }}</div>
                 @enderror
