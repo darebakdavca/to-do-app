@@ -1,3 +1,5 @@
+import $ from './jquery';
+
 $(document).ready(function () {
     $('.task-detail').each(function () {
         const taskId = $(this).data('task-id');

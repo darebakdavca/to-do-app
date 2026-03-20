@@ -1,3 +1,5 @@
+import $ from './jquery';
+
 $(document).ready(function () {
     const profileMenuButton = $('#profile-menu-button');
     const profileMenu = $('#profile-menu');

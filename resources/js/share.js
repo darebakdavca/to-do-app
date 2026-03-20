@@ -1,3 +1,5 @@
+import $ from './jquery';
+
 $(document).ready(function () {
     const shareLink = $('#share-link');
     const copyLink = $('#copy-link');
