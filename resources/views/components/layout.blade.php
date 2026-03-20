@@ -9,6 +9,17 @@
         <link rel="manifest" href="{{ asset('manifest.json') }}">
         <link rel="apple-touch-icon" href="{{ asset('icons/icon-192.png') }}">
         <title>{{ $title ?? '' }} | To Do App</title>
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="{{ $metaTitle ?? (($title ?? 'To Do App') . ' | To Do App') }}">
+        <meta property="og:description"
+            content="{{ $metaDescription ?? 'Organize your tasks, collaborate with others, and stay productive.' }}">
+        <meta property="og:image" content="{{ $metaImage ?? asset('icons/icon-512.png') }}">
+        <meta property="og:url" content="{{ $metaUrl ?? url()->current() }}">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ $metaTitle ?? (($title ?? 'To Do App') . ' | To Do App') }}">
+        <meta name="twitter:description"
+            content="{{ $metaDescription ?? 'Organize your tasks, collaborate with others, and stay productive.' }}">
+        <meta name="twitter:image" content="{{ $metaImage ?? asset('icons/icon-512.png') }}">
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <link type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
             rel="stylesheet">

@@ -14,13 +14,35 @@ class ShareController extends Controller {
 
     public function show(TaskList $taskList) {
         $token = Str::random(40);
-        $link = route('share.accept', ['token' => $token]);
+        $link = route('share.preview', ['token' => $token]);
         Invitation::create([
             'task_list_id' => $taskList->id,
             'token' => $token
         ]);
 
         return view('share', ['taskList' => $taskList, 'link' => $link, 'token' => $token]);
+    }
+
+    public function preview(string $token) {
+        $invitation = Invitation::with('taskList')->where('token', $token)->first();
+
+        if (!$invitation) {
+            abort(404);
+        }
+
+        $taskList = $invitation->taskList;
+
+        return view('invite', [
+            'invitation' => $invitation,
+            'taskList' => $taskList,
+            'acceptLink' => route('share.accept', ['token' => $token]),
+            'metaTitle' => 'Join ' . $taskList->name . ' on To Do App',
+            'metaDescription' => $taskList->description
+                ? $taskList->description
+                : 'Open this invite to join a shared task list on To Do App.',
+            'metaImage' => asset('icons/icon-512.png'),
+            'metaUrl' => route('share.preview', ['token' => $token]),
+        ]);
     }
 
     public function send(Request $request) {

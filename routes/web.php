@@ -41,6 +41,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/share/{task_list}', [ShareController::class, 'show'])->name('share.index');
+Route::get('/invite/{token}', [ShareController::class, 'preview'])->name('share.preview');
 Route::get('/share/accept/{token}', [ShareController::class, 'accept'])->name('share.accept');
 Route::post('/share/send', [ShareController::class, 'send'])->name('share.send');
 
