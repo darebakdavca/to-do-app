@@ -63,7 +63,7 @@ class TaskListController extends Controller {
 
         $taskLists = $user->taskLists;
         $tasks = $taskList->tasks;
-        session(['taskList' => $taskList]);
+        session(['taskList' => $taskList->id]);
         session(['previous_url' => url()->current()]);
         Log::info("Current URL: " . url()->current() . ", Previous URL: " . session('previous_url'));
         Log::info("Task List ID: " . $taskList->id . ", Task List Name: " . $taskList->name);

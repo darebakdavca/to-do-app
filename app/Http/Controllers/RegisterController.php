@@ -40,7 +40,7 @@ class RegisterController extends Controller {
         $user->taskLists()->attach($taskList->id);
 
 
-        session(['taskList' => $taskList]);
+        session(['taskList' => $taskList->id]);
 
         Auth::login($user);
 
