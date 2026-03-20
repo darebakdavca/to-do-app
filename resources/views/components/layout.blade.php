@@ -4,7 +4,10 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#0f172a">
         <link type="image/x-icon" href="{{ asset('favicon.ico') }}" rel="icon">
+        <link rel="manifest" href="{{ asset('manifest.json') }}">
+        <link rel="apple-touch-icon" href="{{ asset('icons/icon-192.png') }}">
         <title>{{ $title ?? '' }} | To Do App</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <link type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
