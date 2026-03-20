@@ -100,7 +100,7 @@
                             @endforelse
                         </div>
                     </div>
-                    <div class="flex grow flex-col">
+                    {{-- <div class="flex grow flex-col">
                         <button
                             class="comment-detail-button w-ful flex grow cursor-pointer items-center justify-center gap-2 rounded bg-slate-600 px-3 py-1.5 hover:bg-slate-500"
                             data-task-id="{{ $task->id }}">
@@ -114,9 +114,9 @@
                             </span>
                         </button>
 
-                    </div>
+                    </div> --}}
                 </div>
-                <div class="comment-detail hidden w-full" data-task-id="{{ $task->id }}">
+                {{-- <div class="comment-detail hidden w-full" data-task-id="{{ $task->id }}">
                     <div class="mb-3 h-[1px] bg-slate-400"></div>
                     @if ($task->comments->count() > 0)
 
@@ -216,7 +216,7 @@
                             {{ $errors->first('content') }}
                         </div>
                     @endif
-                </div>
+                </div> --}}
             @endif
 
         </div>
