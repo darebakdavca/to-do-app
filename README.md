@@ -47,7 +47,8 @@ Important deployment notes:
 - Supabase transaction mode does not support prepared statements, so this repo uses `DB_DISABLE_PREPARES=true` for the `pgsql` connection.
 - `APP_KEY`, `APP_URL`, `DATABASE_URL`, and any real `MAIL_*` settings must be configured as Laravel Cloud environment variables.
 - For migrations, `psql`, `pg_dump`, and other long-lived admin tasks, use Supabase's direct connection or session pooler when appropriate.
-- Laravel Cloud should build frontend assets during deploy, so `public/build` remains ignored in git.
+- This repo commits `public/build`, so Laravel Cloud can serve the production JS/CSS bundle even if no Node build runs during deploy.
+- When frontend code changes, run `npm run build` locally and deploy the updated `public/build` files.
 
 Testing note:
 
@@ -57,8 +58,6 @@ Suggested Laravel Cloud commands:
 
 Build Commands:
 `composer install --no-dev --optimize-autoloader`
-`npm ci`
-`npm run build`
 
 Deploy Command:
 `php artisan migrate --force`
